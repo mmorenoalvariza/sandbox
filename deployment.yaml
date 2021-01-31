@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: sandbox
+  name: sandbox
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sandbox
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: sandbox
+    spec:
+      containers:
+      - image: mmorenoalvariza/sandbox
+        name: sandbox
+        resources: {}
+status: {}
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: demo
+  name: demo
+spec:
+  ports:
+  - name: 8082-8080
+    port: 8082
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: demo
+  type: ClusterIP
+status:
+  loadBalancer: {}
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: sandbox
+  name: sandbox
+spec:
+  ports:
+  - name: 8082-8080
+    port: 8082
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: sandbox
+  type: ClusterIP
+status:
+  loadBalancer: {}
