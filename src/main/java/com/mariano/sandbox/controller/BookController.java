@@ -17,7 +17,6 @@ public class BookController {
     @Autowired
     private BookRepository bookRepository;
 
-    //@GetMapping(path = "/api/books")
     @RequestMapping("/books")
     public ResponseEntity<Iterable<Book>> getBooks() {
         Iterable<Book> books = bookRepository.findAll();
@@ -28,8 +27,8 @@ public class BookController {
     public ResponseEntity<List<Book>> newBook() {
         Book book = Book.builder().publisher("Mariano").tags(Set.of("foo")).title("The title").id(UUID.randomUUID()).build();
         bookRepository.save(book);
-        //List<Book> books = bookRepository.findAll();
-        return ResponseEntity.ok(List.of(book));
+        List<Book> books = bookRepository.findAll();
+        return ResponseEntity.ok(books);
     }
     @RequestMapping("/echo/{value}")
     public ResponseEntity<String> echo(@PathVariable String value) {
