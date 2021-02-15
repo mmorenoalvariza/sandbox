@@ -1,60 +1,37 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: sandbox
+spec:
+  selector:
+    app: sandbox
+    tier: backend
+  ports:
+  - protocol: TCP
+    port: 8080
+    nodePort: 30001
+  #type: ClusterIP
+  type: NodePort
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  creationTimestamp: null
-  labels:
-    app: sandbox
   name: sandbox
 spec:
-  replicas: 1
   selector:
-    matchLabels:
-      app: sandbox
-  strategy: {}
+      matchLabels:
+        app: sandbox
+        tier: backend
+  replicas: 1
   template:
     metadata:
-      creationTimestamp: null
       labels:
         app: sandbox
+        tier: backend
     spec:
       containers:
-      - image: mmorenoalvariza/sandbox
-        name: sandbox
-        resources: {}
-status: {}
-apiVersion: v1
-kind: Service
-metadata:
-  creationTimestamp: null
-  labels:
-    app: demo
-  name: demo
-spec:
-  ports:
-  - name: 8082-8080
-    port: 8082
-    protocol: TCP
-    targetPort: 8080
-  selector:
-    app: demo
-  type: ClusterIP
-status:
-  loadBalancer: {}
-apiVersion: v1
-kind: Service
-metadata:
-  creationTimestamp: null
-  labels:
-    app: sandbox
-  name: sandbox
-spec:
-  ports:
-  - name: 8082-8080
-    port: 8082
-    protocol: TCP
-    targetPort: 8080
-  selector:
-    app: sandbox
-  type: ClusterIP
-status:
-  loadBalancer: {}
+        - name: sandbox
+          image: mmorenoalvariza/sandbox:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
