@@ -2,13 +2,15 @@ kind: Service
 apiVersion: v1
 metadata:
   name: sandbox
+  labels:
+    app: sandbox
 spec:
   selector:
     app: sandbox
     tier: backend
   ports:
   - protocol: TCP
-    port: 8080
+    port: 80
     nodePort: 30001
   #type: ClusterIP
   type: NodePort
@@ -34,4 +36,4 @@ spec:
           image: mmorenoalvariza/sandbox:latest
           imagePullPolicy: Always
           ports:
-            - containerPort: 8080
+            - containerPort: 80
