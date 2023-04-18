@@ -21,6 +21,9 @@ public class Person {
     @Column("last_name")
     private String lastName;
 
+    @Column("first_name")
+    private String firstName;
+
     @Column
     private double salary;
 }

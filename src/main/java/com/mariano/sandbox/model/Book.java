@@ -31,5 +31,7 @@ public class Book {
     private String publisher;
     @Column
     private Set<String> tags;
+
+    private UUID authorId;
     // standard getters and setters
 }
